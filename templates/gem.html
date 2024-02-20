@@ -1,13 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title></title>
+		<title>Zircon Price</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 	</head>
 	<body>
-		<h1>
-			Hello World
-		</h1>
-	</body>
+        <h1 x-data="{ message: 'Zircon Price Prediction' }" x-text="message"></h1>
+        <h2>Select the model for Price prediction</h2>
+
+        <form x-data="{ open: false }" method="GET" action="prediction">
+            <select name="model" id="model">
+                <template x-for="item in {{ models }}">
+                    <option x-text="item.model" :value="item.model" :id="item.id"></option>
+                </template>
+            </select>
+            <br>
+            <input type="number" step="0.01" name="carat" placeholder="carat" value="0.3">
+            <br>
+            <input type="number" step="0.01" name="depth" placeholder="depth" value="62.1">
+            <br>
+            <input type="number" step="0.01" name="table" placeholder="table" value="58">
+
+            <div>
+                <input type="checkbox" @click="open = ! open" name="categories" value="True">Add categories</input>
+                <div x-show="open" x-transition.delay.50ms @click.outside="open = false">
+                     <span>hola</span>
+                </div>
+            </div>
+            <input type="submit" value="Predict">
+        </form>
+
+    </body>
 </html>
