@@ -5,31 +5,52 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <script defer src="https://unpkg.com/htmx.org@1.9.10"></script>
 	</head>
 	<body>
         <h1 x-data="{ message: 'Zircon Price Prediction' }" x-text="message"></h1>
-        <h2>Select the model for Price prediction</h2>
-
-        <form x-data="{ open: false }" method="GET" action="prediction">
+        <form
+                x-data="{ open: false }"
+                hx-trigger="click from:#submit"
+                hx-post="/prediction"
+        >
+            <h2>Select the model for Price prediction</h2>
             <select name="model" id="model">
                 <template x-for="item in {{ models }}">
                     <option x-text="item.model" :value="item.model" :id="item.id"></option>
                 </template>
             </select>
             <br>
-            <input type="number" step="0.01" name="carat" placeholder="carat" value="0.3">
+            <input type="number" step="0.01" name="carat" placeholder="carat" value="0.3" required>
             <br>
-            <input type="number" step="0.01" name="depth" placeholder="depth" value="62.1">
+            <input type="number" step="0.01" name="depth" placeholder="depth" value="62.1" required>
             <br>
-            <input type="number" step="0.01" name="table" placeholder="table" value="58">
+            <input type="number" step="0.01" name="table" placeholder="table" value="58" required>
 
             <div>
                 <input type="checkbox" @click="open = ! open" name="categories" value="True">Add categories</input>
                 <div x-show="open" x-transition.delay.50ms @click.outside="open = false">
-                     <span>hola</span>
+
+                    <select name="cut" id="cut">
+                        <template x-for="cut in {{ cuts }}">
+                            <option x-text="cut" :value="cut" :id="cut"></option>
+                        </template>
+                    </select>
+
+                    <select name="color" id="color">
+                        <template x-for="color in {{ colors }}">
+                            <option x-text="color" :value="color" :id="color"></option>
+                        </template>
+                    </select>
+
+                    <select name="clarity" id="clarity">
+                        <template x-for="clarity in {{ clarities }}">
+                            <option x-text="clarity" :value="clarity" :id="clarity"></option>
+                        </template>
+                    </select>
                 </div>
             </div>
-            <input type="submit" value="Predict">
+            <button id="submit">Predict</button>
         </form>
 
     </body>
