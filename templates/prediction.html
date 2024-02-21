@@ -5,8 +5,10 @@
     <title>Prediction</title>
 </head>
 <body>
-    <h1>Predicted price with {{ model }}</h1>
-    <span>{{ price }}</span>
-    <button hx-location="/">Go Back</button>
+    <h2 class="block mb-2 text-lg font-medium text-gray-900 dark:text-white"> Predicted price with {{ model }}:</h2>
+    <span class="block mb-2 text-gray-900 dark:text-white">${{ price }}</span>
+    <br>
+    <button hx-location="/"
+    class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Go Back</button>
 </body>
 </html>

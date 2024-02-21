@@ -16,6 +16,19 @@ def predict(
         color: str = None,
         clarity: str = None
 ) -> float:
+    """
+    Detects the regression model that the user wants to use for prediction, normalizes the input data and predicts the
+    price with the desired model.
+    :param carat: weight of the gem
+    :param depth: height of the gem
+    :param table: width of the gem
+    :param model: regression model
+    :param categories: if it uses categorical features for the prediction (bad name, I know)
+    :param cut: Cut quality of the gem
+    :param color: Color of the gem
+    :param clarity: Absence of the inclusions and blemishes in the gem
+    :return: the predicted price
+    """
     arg = [0.0 for i in range(23)]
     arg[0] = carat
     arg[1] = depth
@@ -37,8 +50,8 @@ def predict(
                          columns=['carat', 'depth', 'table', 'cut_Fair', 'cut_Good', 'cut_Ideal',
                                   'cut_Premium', 'cut_Very Good', 'color_D', 'color_E', 'color_F',
                                   'color_G', 'color_H', 'color_I', 'color_J', 'clarity_I1', 'clarity_IF',
-                                  'clarity_SI1', 'clarity_SI2', 'clarity_VS1', 'clarity_VS2',
-                                  'clarity_VVS1', 'clarity_VVS2'])
+                                  'clarity_SI1', 'clarity_SI2', 'clarity_VS1', 'clarity_VS2', 'clarity_VVS1',
+                                  'clarity_VVS2'])
         )
 
     else:

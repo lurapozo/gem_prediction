@@ -6,51 +6,91 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <script defer src="https://unpkg.com/htmx.org@1.9.10"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
 	</head>
-	<body>
-        <h1 x-data="{ message: 'Zircon Price Prediction' }" x-text="message"></h1>
+	<body class="dark:bg-slate-800">
+        <h1 x-data="{ message: 'Zircon Price Prediction' }" x-text="message"
+        class="bg-purple-500 text-white text-xl font-medium p-4 mb-5"></h1>
         <form
                 x-data="{ open: false }"
                 hx-trigger="click from:#submit"
                 hx-post="/prediction"
+                class="max-w-sm mx-auto"
         >
-            <h2>Select the model for Price prediction</h2>
-            <select name="model" id="model">
+          <h2 class="block mb-2 text-lg font-medium text-gray-900 dark:text-white"> Select the model for Price prediction</h2>
+
+            <select name="model" id="model"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-300 dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <template x-for="item in {{ models }}">
                     <option x-text="item.model" :value="item.model" :id="item.id"></option>
                 </template>
             </select>
             <br>
-            <input type="number" step="0.01" name="carat" placeholder="carat" value="0.3" required>
-            <br>
-            <input type="number" step="0.01" name="depth" placeholder="depth" value="62.1" required>
-            <br>
-            <input type="number" step="0.01" name="table" placeholder="table" value="58" required>
+            <div class="relative z-0 w-full mb-5 group">
+                <input type="number" step="0.01" name="carat" placeholder=" " required class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-500 focus:outline-none focus:ring-0 focus:border-purple-500 peer" >
+                <label for="carat" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-500 peer-focus:dark:text-purple-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Carat weight</label>
+
+            </div>
+
+            <div class="relative z-0 w-full mb-5 group">
+                <input type="number" step="0.01" name="depth" placeholder=" " required class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-500 focus:outline-none focus:ring-0 focus:border-purple-500 peer" >
+                <label for="depth" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-500 peer-focus:dark:text-purple-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Depth/Height</label>
+            </div>
+
+            <div class="relative z-0 w-full mb-5 group">
+                <input type="number" step="0.01" name="table" placeholder=" " required class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-500 focus:outline-none focus:ring-0 focus:border-purple-500 peer">
+                <label for="table" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-500 peer-focus:dark:text-purple-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Table/Width</label>
+            </div>
 
             <div>
-                <input type="checkbox" @click="open = ! open" name="categories" value="True">Add categories</input>
-                <div x-show="open" x-transition.delay.50ms @click.outside="open = false">
+                <div class="flex">
+                    <div class="flex items-center h-5">
+                        <input type="checkbox" @click="open = ! open" name="categories" value="True"
+                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    </div>
+                    <div class="ms-2 text-sm">
+                        <label for="categories" class="font-medium text-gray-900 dark:text-gray-300">Include categorical data</label>
+                        <p id="helper-checkbox-text" class="text-xs font-normal text-gray-500 dark:text-gray-300">Including categorical data leads to better price predictions</p>
+                    </div>
+                </div>
 
-                    <select name="cut" id="cut">
+
+                <div x-show="open" x-transition.delay.50ms>
+                    <br>
+                    <label for="cut" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cut Quality</label>
+
+                    <select name="cut" id="cut"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-300 dark:focus:ring-blue-500 dark:focus:border-blue-500">>
                         <template x-for="cut in {{ cuts }}">
                             <option x-text="cut" :value="cut" :id="cut"></option>
                         </template>
                     </select>
 
-                    <select name="color" id="color">
+                    <br>
+                    <label for="color" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Color</label>
+
+                    <select name="color" id="color"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-300 dark:focus:ring-blue-500 dark:focus:border-blue-500">>
                         <template x-for="color in {{ colors }}">
                             <option x-text="color" :value="color" :id="color"></option>
                         </template>
                     </select>
 
-                    <select name="clarity" id="clarity">
+                    <br>
+                    <label for="clarity" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Clarity</label>
+
+                    <select name="clarity" id="clarity"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-300 dark:focus:ring-blue-500 dark:focus:border-blue-500">>
                         <template x-for="clarity in {{ clarities }}">
                             <option x-text="clarity" :value="clarity" :id="clarity"></option>
                         </template>
                     </select>
+                    <br>
                 </div>
             </div>
-            <button id="submit">Predict</button>
+            <br>
+            <button id="submit"
+            class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Predict</button>
         </form>
 
     </body>
