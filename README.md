@@ -29,6 +29,4 @@ framework that uses templates, like Templ, Django, FastApi, etc., feels amazing,
 
 There are still more stuff I want to do with this project.
 
-- More data cleaning.
-
 - Planning on implementing more regression methods.

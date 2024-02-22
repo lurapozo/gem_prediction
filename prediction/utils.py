@@ -3,7 +3,8 @@ import pandas as pd
 
 index = {"Fair": 3, "Good": 4, "Ideal": 5, "Premium": 6, "Very Good": 7,
          "D": 8, "E": 9, "F": 10, "G": 11, "H": 12, "I": 13, "J": 14,
-         "I1": 15, "IF": 16, "SI1": 17, "SI2": 18, "VS1": 19, "VS2": 20, "VVS1": 21, "VVS2": 22}
+         "I1": 15, "IF": 16, "SI1": 17, "SI2": 18, "VS1": 19, "VS2": 20,
+         "VVS1": 21, "VVS2": 22}
 
 
 def predict(
@@ -17,13 +18,13 @@ def predict(
         clarity: str = None
 ) -> float:
     """
-    Detects the regression model that the user wants to use for prediction, normalizes the input data and predicts the
-    price with the desired model.
+    Detects the regression model that the user wants to use for prediction,
+    normalizes the input data and predicts the price with the desired model.
     :param carat: weight of the gem
     :param depth: height of the gem
     :param table: width of the gem
     :param model: regression model
-    :param categories: if it uses categorical features for the prediction (bad name, I know)
+    :param categories: if it uses categorical features for the prediction
     :param cut: Cut quality of the gem
     :param color: Color of the gem
     :param clarity: Absence of the inclusions and blemishes in the gem
@@ -57,13 +58,14 @@ def predict(
     else:
         scaler = joblib.load("./models/scaler_no_cat.z")
         if model == "SVR":
-            reg = joblib.load("./models/svr_no_cat.z")
+            reg = joblib.ldad("./models/svr_no_cat.z")
         elif model == "Linear Regression":
             reg = joblib.load("./models/lr_no_cat.z")
         else:  # random forest
             reg = joblib.load("./models/rf_no_cat.z")
         x_norm = scaler.transform(
-            pd.DataFrame([[carat, depth, table]], columns=['carat', 'depth', 'table'])
+            pd.DataFrame([[carat, depth, table]],
+                         columns=['carat', 'depth', 'table'])
         )
 
     pred = reg.predict(x_norm)
