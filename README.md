@@ -24,9 +24,3 @@ Now that the main functionality is finished, I wanted to talk about opinions tha
 ## Conclusion
 - Of course this is not a full on project, it isn't a completely functional application and I have not used this stack in production, so I cannot say for certain that this stack is amazing. However, at least for prototyping, it feels really fast, and I do love how simple it feels to use these technologies. Using AlpineJS, HTMX & TailwindCSS with any
 framework that uses templates, like Templ, Django, FastApi, etc., feels amazing, and I'll try to incorporate it in my work (if possible).
-
-## Future Work
-
-There are still more stuff I want to do with this project.
-
-- Planning on implementing more regression methods.

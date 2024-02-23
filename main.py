@@ -28,7 +28,9 @@ async def read_item(request: Request):
         context={"models":
                  [{"id": 1, "model": "SVR"},
                   {"id": 2, "model": "Linear Regression"},
-                  {"id": 3, "model": "Random Forest Classifier"}],
+                  {"id": 3, "model": "Random Forest Regressor"},
+                  {"id": 4, "model": "K Nearest Regressor"},
+                  {"id": 5, "model": "Gradient Boosting Regressor"}],
                  "cuts": cuts, "colors": colors, "clarities": clarities}
     )
 
@@ -39,6 +41,7 @@ async def prediction(
         carat: Annotated[float, Form()],
         depth: Annotated[float, Form()],
         table: Annotated[float, Form()],
+        volume: Annotated[float, Form()],
         model: Annotated[str, Form()],
         categories: Annotated[bool, Form()] = None,
         cut: Annotated[str, Form()] = None,
@@ -48,9 +51,10 @@ async def prediction(
     Renders the prediction of the price given by the model with the given
     parameters of the Zircon.
     :param request:
-    :param carat: weight of the gem
-    :param depth: height of the gem
-    :param table: width of the gem
+    :param carat: carat of the gem
+    :param depth: depth of the gem
+    :param table: table of the gem
+    :param volume: volume of the gem
     :param model: regression model
     :param categories: if it uses categorical features for the prediction (bad
     name, I know)
@@ -61,7 +65,7 @@ async def prediction(
     model and the predicted price
     """
     pred: float = utils.predict(
-        carat, depth, table, model, categories, cut, color, clarity)
+        carat, depth, table, volume, model, categories, cut, color, clarity)
     return templates.TemplateResponse(
         request=request, name="prediction.html",
         context={"model": model, "price": "{:.2f}".format(pred)}
